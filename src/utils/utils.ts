@@ -1,4 +1,10 @@
 import type { Day } from './types';
+import { twMerge } from 'tailwind-merge';
+import { clsx, type ClassValue } from 'clsx';
+
+export function cn(...args: ClassValue[]) {
+  return twMerge(clsx(args));
+}
 
 export const isoDate = (date: Date) => date.toISOString().split('T')[0];
 

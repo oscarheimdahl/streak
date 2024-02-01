@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
-import { gapFillStreak } from '../utils';
-import type { Day } from '../types';
+import { gapFillStreak } from '../utils/utils';
+import type { Day } from '../utils/types';
 
 function datesToDays(dates: string[]) {
   return dates.map((date) => ({ date, streakAlive: false }));

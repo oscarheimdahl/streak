@@ -1,14 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import type { Day } from './types';
-  import Check from './Check.svelte';
-  import { gapFillStreak, isoDate, today } from './utils';
+  import type { Day } from './utils/types';
+  import Check from './lib/Check.svelte';
+  import { gapFillStreak, today } from './utils/utils';
 
   let streak: Day[] = [];
-
-  function sortDaysByDate(dayA: Day, dayB: Day) {
-    return new Date(dayA.date).getTime() - new Date(dayB.date).getTime();
-  }
 
   onMount(() => {
     const storedStreak = localStorage.getItem('streak') ?? '[]';
@@ -20,13 +16,17 @@
     streak = gapFilledStreak;
   });
 
+  function sortDaysByDate(dayA: Day, dayB: Day) {
+    return new Date(dayA.date).getTime() - new Date(dayB.date).getTime();
+  }
+
   function saveDay(day: Day) {
     const otherDays = streak.filter((otherDay) => otherDay.date !== day.date);
     localStorage.setItem('streak', JSON.stringify([...otherDays, day]));
   }
 </script>
 
-<div class="flex flex-col gap-4 h-full p-2 items-start">
+<div class="grid gap-2 grid-cols-[repeat(5,1fr)] md:grid-cols-[repeat(15,1fr)]">
   {#each streak as day}
     <Check {saveDay} {day} />
   {/each}
