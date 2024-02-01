@@ -26,7 +26,7 @@
   }
 </script>
 
-<div class="grid gap-2 grid-cols-[repeat(5,1fr)] md:grid-cols-[repeat(15,1fr)]">
+<div class="grid grid-cols-[repeat(5,1fr)] md:grid-cols-[repeat(15,1fr)]">
   {#each streak as day}
     <Check {saveDay} {day} />
   {/each}

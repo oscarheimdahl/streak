@@ -1,8 +1,6 @@
 <script lang="ts">
   import type { Day } from '../utils/types';
 
-  import { cn } from '../utils/utils';
-
   export let day: Day;
   export let saveDay: (day: Day) => void;
 
@@ -22,8 +20,6 @@
       .toLocaleUpperCase();
   }
 </script>
-
-<!-- <div class="group w-0 h-0"> -->
 
 <button
   on:click={handleClick}
@@ -54,26 +50,26 @@
 
 <style>
   .checked-0 {
-    --col: #a98bcb;
+    --col: 169, 139, 203;
   }
   .checked-1 {
-    --col: #41d1df;
+    --col: 65, 209, 223;
   }
   .checked-2 {
-    --col: #93eb6f;
+    --col: 147, 235, 111;
   }
   .checked-3 {
-    --col: #ffe95c;
+    --col: 255, 233, 92;
   }
   .checked-4 {
-    --col: #febb58;
+    --col: 254, 187, 88;
   }
   .checked-5 {
-    --col: #ff7d81;
+    --col: 255, 125, 129;
   }
 
   .checked {
-    box-shadow: 0 0 5px var(--col);
-    background-color: var(--col);
+    /* box-shadow: 0 0 3px rgb(var(--col), 1); */
+    background-color: rgb(var(--col));
   }
 </style>
