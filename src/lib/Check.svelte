@@ -1,10 +1,12 @@
 <script lang="ts">
   import type { Day } from '../utils/types';
+  import { today } from '../utils/utils';
 
   export let day: Day;
   export let saveDay: (day: Day) => void;
 
   function handleClick() {
+    if (day.date !== today && !localStorage.getItem('unlocked')) return;
     day.streakAlive = !day.streakAlive;
     day.color = day.color ?? Math.floor(Math.random() * 6);
     saveDay(day);
