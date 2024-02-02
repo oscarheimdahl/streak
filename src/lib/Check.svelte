@@ -57,7 +57,7 @@
     text-center justify-center
     pointer-events-none fixed font-bold inset-0 grid place-content-center opacity-0
     drop-shadow-lg text-[4rem]
-    group-hover:opacity-50
+    group-hover:opacity-100
     md:text-[8rem]
     lg:text-[14rem]`}
       for={`button-${day.date}`}
