@@ -2,6 +2,7 @@
   import { onMount } from 'svelte';
   import type { Day } from '../utils/types';
   import { today } from '../utils/utils';
+  import { dateStore } from '../utils/store';
 
   export let day: Day;
   export let saveDay: (day: Day) => void;
@@ -12,65 +13,32 @@
     day.color = day.color ?? Math.floor(Math.random() * 6);
     saveDay(day);
   }
-
-  function formatDate(date: string) {
-    return new Date(date)
-      .toLocaleDateString('sv-SE', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-      })
-      .toLocaleUpperCase();
-  }
-
-  let showDate = false;
-  let showDateTimeout: NodeJS.Timeout;
-  onMount(() => {
-    document.addEventListener('mousemove', () => {
-      clearTimeout(showDateTimeout);
-      showDate = true;
-      showDateTimeout = setTimeout(() => (showDate = false), 3000);
-
-      return () => clearTimeout(showDateTimeout);
-    });
-  });
 </script>
 
-<div class="grid stack">
+<button
+  class="grid stack group"
+  on:click={handleClick}
+  on:focus={() => dateStore.set(day.date)}
+  on:mouseover={() => dateStore.set(day.date)}
+>
   {#if day.streakAlive}
     <div class={`shadow color-${day.color}`}></div>
   {/if}
-  <button
-    on:click={handleClick}
-    id={`button-${day.date}`}
-    class={`
-      group relative
-      ${day.streakAlive ? `checked color-${day.color}` : 'bg-transparent '}
-      w-full aspect-square
-      p-0 m-0
-      focus:outline-none
-    `}
-  >
-    <label
-      class={`
-      z-10
-    text-center justify-center
-    pointer-events-none fixed font-bold inset-0 grid place-content-center opacity-0
-    drop-shadow-lg text-[4rem]
-    group-hover:opacity-100
-    md:text-[8rem]
-    lg:text-[14rem]`}
-      for={`button-${day.date}`}
+  <span class={`square-scale ${day.streakAlive ? `scale-100` : 'scale-50'}`}>
+    <span
+      class={`square-radius ${day.streakAlive ? `rounded-none` : 'rounded-xl'}`}
     >
-      <div class="flex flex-col">
-        <span
-          class={`${showDate ? 'opacity-100' : 'opacity-0'} transition-opacity`}
-          >{formatDate(day.date)}</span
-        >
-      </div>
-    </label>
-  </button>
-</div>
+      <div
+        class={`
+              ${
+                day.streakAlive
+                  ? `checked color-${day.color}`
+                  : 'bg-transparent '
+              }` + ' w-full aspect-square p-0 m-0 focus:outline-none'}
+      />
+    </span>
+  </span>
+</button>
 
 <style>
   .stack > * {
@@ -100,6 +68,19 @@
     background-color: rgb(var(--col));
   }
   .shadow {
-    box-shadow: 0 0 10px rgb(var(--col), 1);
+    transition: box-shadow 1s;
+    box-shadow: 0 0 10px rgb(var(--col), 0.5);
+  }
+  .group:hover .shadow {
+    box-shadow: 0 0 20px rgb(var(--col), 0);
+  }
+
+  .square-scale {
+    transition: transform 0.2s;
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.375);
+  }
+  .square-radius {
+    transition: border-radius 0.2s;
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.375);
   }
 </style>

@@ -3,6 +3,8 @@
   import type { Day } from './utils/types';
   import Check from './lib/Check.svelte';
   import { gapFillStreak, today } from './utils/utils';
+  import { writable } from 'svelte/store';
+  import DateLabel from './lib/DateLabel.svelte';
 
   let streak: Day[] = [];
 
@@ -26,8 +28,11 @@
   }
 </script>
 
-<div class="grid grid-cols-[repeat(5,1fr)] md:grid-cols-[repeat(15,1fr)]">
+<div
+  class="grid p-2 gap-2 grid-cols-[repeat(10,1fr)] md:grid-cols-[repeat(25,1fr)]"
+>
   {#each streak as day}
     <Check {saveDay} {day} />
   {/each}
+  <DateLabel />
 </div>
