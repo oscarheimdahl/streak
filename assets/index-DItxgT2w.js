@@ -3,7 +3,7 @@ var se=Object.defineProperty;var le=(e,t,n)=>t in e?se(e,t,{enumerable:!0,config
     text-center justify-center
     pointer-events-none fixed font-bold inset-0 grid place-content-center opacity-0
     drop-shadow-lg text-[4rem]
-    group-hover:opacity-50
+    group-hover:opacity-100
     md:text-[8rem]
     lg:text-[14rem]`)+" svelte-ngo70b"),d(r,"for",p=`button-${e[0].date}`),d(o,"id",u=`button-${e[0].date}`),d(o,"class",m=_(`
       group relative
