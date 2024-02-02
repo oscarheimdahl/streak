@@ -23,55 +23,66 @@
   }
 </script>
 
-<button
-  on:click={handleClick}
-  id={`button-${day.date}`}
-  class={`
-      group
-      ${day.streakAlive ? `checked checked-${day.color}` : 'bg-transparent '}
+<div class="grid stack">
+  {#if day.streakAlive}
+    <div class={`shadow color-${day.color}`}></div>
+  {/if}
+  <button
+    on:click={handleClick}
+    id={`button-${day.date}`}
+    class={`
+      group relative z-10
+      ${day.streakAlive ? `checked color-${day.color}` : 'bg-transparent '}
       w-full aspect-square
       p-0 m-0
       focus:outline-none
     `}
->
-  <label
-    class={`
+  >
+    <label
+      class={`
     text-center justify-center
     pointer-events-none fixed font-bold inset-0 grid place-content-center opacity-0
     drop-shadow-lg text-[4rem]
     group-hover:opacity-50
     md:text-[8rem]
     lg:text-[14rem]`}
-    for={`button-${day.date}`}
-  >
-    <div class="flex flex-col">
-      <span>{formatDate(day.date)}</span>
-    </div>
-  </label>
-</button>
+      for={`button-${day.date}`}
+    >
+      <div class="flex flex-col">
+        <span>{formatDate(day.date)}</span>
+      </div>
+    </label>
+  </button>
+</div>
 
 <style>
-  .checked-0 {
+  .stack > * {
+    grid-area: 1 / 1 / 2 / 2;
+  }
+
+  .color-0 {
     --col: 169, 139, 203;
   }
-  .checked-1 {
+  .color-1 {
     --col: 65, 209, 223;
   }
-  .checked-2 {
+  .color-2 {
     --col: 147, 235, 111;
   }
-  .checked-3 {
+  .color-3 {
     --col: 255, 233, 92;
   }
-  .checked-4 {
+  .color-4 {
     --col: 254, 187, 88;
   }
-  .checked-5 {
+  .color-5 {
     --col: 255, 125, 129;
   }
 
   .checked {
-    /* box-shadow: 0 0 3px rgb(var(--col), 1); */
     background-color: rgb(var(--col));
+  }
+  .shadow {
+    box-shadow: 0 0 10px rgb(var(--col), 1);
   }
 </style>
