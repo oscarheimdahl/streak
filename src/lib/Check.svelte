@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import type { Day } from '../utils/types';
   import { today } from '../utils/utils';
 
@@ -21,6 +22,18 @@
       })
       .toLocaleUpperCase();
   }
+
+  let showDate = false;
+  let showDateTimeout: NodeJS.Timeout;
+  onMount(() => {
+    document.addEventListener('mousemove', () => {
+      clearTimeout(showDateTimeout);
+      showDate = true;
+      showDateTimeout = setTimeout(() => (showDate = false), 3000);
+
+      return () => clearTimeout(showDateTimeout);
+    });
+  });
 </script>
 
 <div class="grid stack">
@@ -31,7 +44,7 @@
     on:click={handleClick}
     id={`button-${day.date}`}
     class={`
-      group relative z-10
+      group relative
       ${day.streakAlive ? `checked color-${day.color}` : 'bg-transparent '}
       w-full aspect-square
       p-0 m-0
@@ -40,6 +53,7 @@
   >
     <label
       class={`
+      z-10
     text-center justify-center
     pointer-events-none fixed font-bold inset-0 grid place-content-center opacity-0
     drop-shadow-lg text-[4rem]
@@ -49,7 +63,10 @@
       for={`button-${day.date}`}
     >
       <div class="flex flex-col">
-        <span>{formatDate(day.date)}</span>
+        <span
+          class={`${showDate ? 'opacity-100' : 'opacity-0'} transition-opacity`}
+          >{formatDate(day.date)}</span
+        >
       </div>
     </label>
   </button>
